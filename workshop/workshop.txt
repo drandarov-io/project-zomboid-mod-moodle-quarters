@@ -1,0 +1,31 @@
+version=1
+id=2854030563
+title=Moodle Quarters
+description=[h1]Informations:[/h1]
+description=
+description=Changes one additional quarter of the moodle background to a square for each moodle level.
+description=
+description=[h1]Known issues:[/h1]
+description=[list]
+description=[*] None so far
+description=[/list]
+description=
+description=[h1]If you want to support me[/h1]
+description=[list]
+description=[*] https://paypal.me/Drandarov
+description=[*] https://github.com/sponsors/drandarov-io
+description=[/list]
+description=
+description=[h1]Check out my other mods if you don't mind[/h1]
+description=[list]
+description=[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2850167382]Pass Out[/url]
+description=[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2849442345]Just Sleep[/url]
+description=[/list]
+description=
+description=[h1]GitHub[/h1]
+description=[list]
+description=[*] https://github.com/drandarov-io/project-zomboid-mod-moodle-quarters
+description=[/list]
+description=
+tags=Build 41;Food;Interface;Misc;Silly/Fun;Textures
+visibility=public
