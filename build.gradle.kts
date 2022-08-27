@@ -1,3 +1,7 @@
+//----------------------------------------------------------------------------------------------------------------------
+// Project Setup
+//----------------------------------------------------------------------------------------------------------------------
+
 plugins {
     java
 }
@@ -20,22 +24,37 @@ sourceSets.create("media") {
     compileClasspath += sourceSets.main.get().compileClasspath
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------
+// Tasks
+//----------------------------------------------------------------------------------------------------------------------
+
+val projectName = if (project.hasProperty("betaBuild")) "${project.name}-beta" else project.name
+
+val buildPath = "$buildDir/workshop/${projectName}"
+val modPath = "$buildPath/Contents/mods/${projectName}"
+
+val localPath = "${System.getProperties()["user.home"]}/Zomboid/Workshop"
+val localModPath = "$localPath/${projectName}"
+
 val buildWorkshop by tasks.registering {
-    val buildPath = "$buildDir/workshop/${project.name}"
-    val modPath = "$buildPath/Contents/mods/${project.name}"
 
     group = "build"
     outputs.dir("$buildDir/workshop")
 
     doLast {
         copy {
-            from("workshop/preview.png", "workshop/workshop.txt")
+            from(if (project.hasProperty("betaBuild")) "workshop/preview_beta.png" else "workshop/preview.png",
+                if (project.hasProperty("betaBuild")) "workshop/workshop_beta.txt" else "workshop/workshop.txt")
             into(buildPath)
+            rename("preview_beta.png", "preview.png")
+            rename("workshop_beta.txt", "workshop.txt")
         }
 
         copy {
-            from("workshop/poster.png", "workshop/mod.info")
+            from(if (project.hasProperty("betaBuild")) "workshop/poster_beta.png" else "workshop/poster.png", "workshop/mod.info")
             into(modPath)
+            rename("poster_beta.png", "poster.png")
         }
         copy {
             from("media")
@@ -45,12 +64,18 @@ val buildWorkshop by tasks.registering {
 }
 
 val localDeploy by tasks.registering {
-    val localPath = "${System.getProperties()["user.home"]}/Zomboid/Workshop"
 
     group = "build"
-    outputs.dir("$localPath/${project.name}")
+    outputs.dir("$localPath/${projectName}")
 
     dependsOn(buildWorkshop)
+
+    doFirst {
+        if (project.hasProperty("betaBuild")) {
+            File("$modPath/mod.info").writeText(File("$modPath/mod.info").readText().replace("(id=.*)".toRegex(), "$1-beta"))
+            File("$modPath/mod.info").writeText(File("$modPath/mod.info").readText().replaceFirst("(name=.*)".toRegex(), "$1 [Beta]"))
+        }
+    }
 
     doLast {
         copy {

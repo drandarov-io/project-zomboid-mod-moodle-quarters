@@ -1,7 +1,7 @@
 version = 0
 settings
 {
-    packFileName = ../media/texturepacks/UI.pack
+    packFileName = ../media/texturepacks/Quarters.pack
     outputImageSize = 512,512
     scale50 = false
     inputImageDirectory
